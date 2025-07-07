@@ -7,3 +7,6 @@ onnx
 onnxruntime
 optimum
 faiss-cpu
+ipywidgets
+psutil
+python-dotenv
