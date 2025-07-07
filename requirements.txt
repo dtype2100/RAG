@@ -1,0 +1,9 @@
+llama-cpp-python
+langchain-community
+langchain_huggingface
+huggingface_hub
+sentence-transformers
+onnx
+onnxruntime
+optimum
+faiss-cpu
