@@ -10,3 +10,5 @@ faiss-cpu
 ipywidgets
 psutil
 python-dotenv
+newspaper3k
+lxml[html_clean]
