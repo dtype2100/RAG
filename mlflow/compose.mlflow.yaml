@@ -6,6 +6,8 @@ services:
   postgres:
     image: postgres:15
     container_name: mlflow-postgres
+    env_file:
+      - .env.mlflow
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -23,6 +25,8 @@ services:
   minio:
     image: minio/minio:latest
     container_name: mlflow-minio
+    env_file:
+      - .env.mlflow
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
@@ -41,6 +45,8 @@ services:
   create-bucket:
     image: minio/mc:latest
     container_name: mlflow-create-bucket
+    env_file:
+      - .env.mlflow
     depends_on:
       minio:
         condition: service_healthy
@@ -55,6 +61,8 @@ services:
   mlflow:
     image: ghcr.io/mlflow/mlflow:${MLFLOW_VERSION}
     container_name: mlflow-server
+    env_file:
+      - .env.mlflow
     depends_on:
       postgres:
         condition: service_healthy
