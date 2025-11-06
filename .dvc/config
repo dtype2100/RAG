@@ -1,0 +1,6 @@
+['remote "minio_embedding"']
+    url = s3://embedding
+    endpointurl = http://localhost:9000
+['remote "minio_llm"']
+    url = s3://llm
+    endpointurl = http://localhost:9000
