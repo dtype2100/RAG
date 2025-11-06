@@ -65,3 +65,8 @@ Thumbs.db
 
 # Project specific
 AI/
+
+llm_models
+.cursor
+
+embedding_models/
