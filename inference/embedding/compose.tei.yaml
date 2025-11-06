@@ -1,0 +1,24 @@
+services:
+  embedding:
+    build:
+      context: .
+      dockerfile: Dockerfile.embedding
+    ports:
+      - 8000:8000
+    environment:
+      - MODEL_NAME=dragonkue/multilingual-e5-small-ko
+    volumes:
+      - ./embedding_models:/root/.cache/huggingface
+    command: text-embeddings-inference serve ${MODEL_NAME} --host 0.0.0.0 --port 8000
+  
+  reranker:
+    build:
+      context: .
+      dockerfile: Dockerfile.reranker
+    ports:
+      - 8001:8001
+    environment:
+      - MODEL_NAME=dragonkue/multilingual-e5-reranker-ko
+    volumes:
+      - ./embedding_models:/root/.cache/huggingface
+    command: text-embeddings-inference serve ${MODEL_NAME} --host 0.0.0.0 --port 8001
