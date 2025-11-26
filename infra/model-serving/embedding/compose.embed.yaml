@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+  infinity:
+    build:
+      context: .
+      dockerfile: Dockerfile.infinity
+    container_name: infinity-server
+    ports:
+      # 포트 설정 (환경 변수로 오버라이드 가능)
+      - "${INFINITY_PORT:-7997}:7997"
+    volumes:
+      # 모델을 로컬에 저장하여 재시작 시 다운로드 방지
+      - ./embedding-models:/app/.cache
+    command:
+      - "v2"
+      # 임베딩 모델 (Fast & High Performance)
+      - "--model-id"
+      - "${EMBEDDING_MODEL_ID:-BAAI/bge-m3}"
+      # 리랭커 모델 (High Accuracy)
+      - "--model-id"
+      - "${RERANKER_MODEL_ID:-BAAI/bge-reranker-base}"
+      # CPU 가속 엔진 설정
+      - "--engine"
+      - "${INFINITY_ENGINE:-ctranslate2}"
+      # 장치 설정
+      - "--device"
+      - "${INFINITY_DEVICE:-cpu}"
+      # 배치 사이즈 (CPU 메모리에 맞춰 조절, 16~32 추천)
+      - "--batch-size"
+      - "${INFINITY_BATCH_SIZE:-16}"
+    environment:
+      # 로깅 레벨 설정
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+    restart: unless-stopped
+    # Healthcheck 추가: 서비스 상태 모니터링
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7997/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    # 리소스 제한 설정
+    deploy:
+      resources:
+        limits:
+          memory: ${INFINITY_MEMORY_LIMIT:-4G}
+          # CPU 제한 (필요시 주석 해제)
+          cpus: ${INFINITY_CPU_LIMIT:-2.0}
+        reservations:
+          # 최소 메모리 보장
+          memory: ${INFINITY_MEMORY_RESERVATION:-2G}
