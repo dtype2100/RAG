@@ -70,3 +70,8 @@ llm_models
 .cursor
 
 embedding_models/
+
+
+uv.lock
+.python-version
+pyproject.toml
