@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   infinity:
     build:
@@ -22,7 +20,7 @@ services:
       - "${RERANKER_MODEL_ID:-BAAI/bge-reranker-base}"
       # CPU 가속 엔진 설정
       - "--engine"
-      - "${INFINITY_ENGINE:-ctranslate2}"
+      - "${INFINITY_ENGINE:-torch}" # bctranslate2
       # 장치 설정
       - "--device"
       - "${INFINITY_DEVICE:-cpu}"
