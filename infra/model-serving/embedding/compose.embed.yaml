@@ -15,12 +15,14 @@ services:
       # 임베딩 모델 (Fast & High Performance)
       - "--model-id"
       - "${EMBEDDING_MODEL_ID:-BAAI/bge-m3}"
+      - "--engine"
+      - "torch"
       # 리랭커 모델 (High Accuracy)
       - "--model-id"
       - "${RERANKER_MODEL_ID:-BAAI/bge-reranker-base}"
       # CPU 가속 엔진 설정
       - "--engine"
-      - "${INFINITY_ENGINE:-torch}" # bctranslate2
+      - "torch"
       # 장치 설정
       - "--device"
       - "${INFINITY_DEVICE:-cpu}"
