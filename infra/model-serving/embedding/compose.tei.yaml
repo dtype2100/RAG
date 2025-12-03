@@ -1,6 +1,8 @@
 services:
   tei:
-    image: ghcr.io/huggingface/text-embeddings-inference:1.4.0
+    build:
+      context: .
+      dockerfile: Dockerfile.tei
     container_name: tei-server
     ports:
       # 포트 설정 (환경 변수로 오버라이드 가능)
