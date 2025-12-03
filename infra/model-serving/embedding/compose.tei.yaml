@@ -1,0 +1,39 @@
+services:
+  tei:
+    image: ghcr.io/huggingface/text-embeddings-inference:1.4.0
+    container_name: tei-server
+    ports:
+      # 포트 설정 (환경 변수로 오버라이드 가능)
+      - "${TEI_PORT:-8080}:8080"
+    volumes:
+      # 모델 캐시 공유
+      - ./embedding-models:/data/cache
+    environment:
+      # 임베딩 모델 지정
+      - MODEL_ID=${EMBEDDING_MODEL_ID:-BAAI/bge-m3}
+      # 디바이스(CPU/GPU) 지정
+      - DEVICE=${TEI_DEVICE:-cpu}
+      # 로깅 레벨
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      # 모델 캐시 디렉터리
+      - TRANSFORMERS_CACHE=/data/cache
+      # 서버에 대한 추가 설정(필요에 따라 주석 해제)
+      - TEI_N_CONTEXT_TOKENS=512
+      - TEI_MAX_BATCH_TOKENS=4096
+      - TEI_MAX_BATCH_SIZE=32
+    restart: unless-stopped
+    # Healthcheck 추가: 서비스 상태 모니터링
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: ${TEI_MEMORY_LIMIT:-4G}
+          # CPU 제한 (필요시 주석 해제)
+          cpus: ${TEI_CPU_LIMIT:-2.0}
+        reservations:
+          memory: ${TEI_MEMORY_RESERVATION:-2G}
