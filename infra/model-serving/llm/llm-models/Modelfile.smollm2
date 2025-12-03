@@ -1,1 +1,13 @@
 FROM ./smollm/smollm2-1.7b-instruct-q4_k_m.gguf
+
+# 2. ChatML 템플릿 설정 (이게 없으면 Tool Calling 불가)
+TEMPLATE """{{ if .System }}<|im_start|>system
+{{ .System }}<|im_end|>
+{{ end }}{{ if .Prompt }}<|im_start|>user
+{{ .Prompt }}<|im_end|>
+{{ end }}<|im_start|>assistant
+"""
+
+# 3. 모델 파라미터 설정 (답변 끊기)
+PARAMETER stop "<|im_start|>"
+PARAMETER stop "<|im_end|>"
