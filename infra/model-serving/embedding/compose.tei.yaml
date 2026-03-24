@@ -9,10 +9,10 @@ services:
       - "${TEI_PORT:-8080}:8080"
     volumes:
       # 모델 캐시 공유
-      - ./embedding-models:/data/cache
+      - ./minilm:/data/cache
     environment:
       # 임베딩 모델 지정
-      - MODEL_ID=${EMBEDDING_MODEL_ID:-BAAI/bge-m3}
+      - MODEL_ID=${EMBEDDING_MODEL_ID:-,sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2}
       # 디바이스(CPU/GPU) 지정
       - DEVICE=${TEI_DEVICE:-cpu}
       # 로깅 레벨

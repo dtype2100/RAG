@@ -3,6 +3,7 @@ langchain-community
 langchain_huggingface
 langchain-core
 langchain
+langchain-text-splitters
 huggingface_hub
 sentence-transformers
 faiss-cpu
@@ -12,3 +13,6 @@ psutil
 python-dotenv
 pandas
 langchain_ollama
+langgraph
+langchain-openai
+tqdm
