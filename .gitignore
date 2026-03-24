@@ -1,5 +1,6 @@
 # Environment
 .env
+.env.*
 .venv/
 venv/
 env/
@@ -40,6 +41,7 @@ models/
 *.onnx
 *.bin
 *.safetensors
+*.gguf
 
 # Logs
 logs/
@@ -63,17 +65,40 @@ Thumbs.db
 *.tmp
 *.temp
 
+# Claude Code
+.claude/
+
+# Cursor
+.cursor/
+
+# DVC
+.dvc/cache/
+.dvc/tmp/
+.dvc/config.local
+
 # Project specific
 AI/
-
-llm_models
-.cursor
-
+llm_models/
 embedding_models/
+gemma/
 
+# Generated crawled pages
+md_pages/
+md_pages_clean/
 
+# Local vector databases
+scripts/chroma_db/
+
+# Generated split / dataset files
+scripts/splits*.json
+scripts/splits*.jsonl
+scripts/datasets/
+
+# Build / packaging
 uv.lock
 .python-version
 pyproject.toml
 
-gemma
+# Data files
+*.csv
+*.jsonl
